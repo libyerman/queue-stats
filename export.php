@@ -108,13 +108,12 @@ function FancyTable($header,$data,$w)
 
 function export_csv($header,$data)
 {
-//header("Content-Type: application/csv-tab-delimited-table");
-header("Content-Type: text/csv");
+header("Content-Type: application/csv-tab-delimited-table");
 header("Content-disposition: filename=table.csv");
 
 $linea="";
 foreach($header as $valor) {
-	$linea.=iconv("UTF-8", "CP1251", "$valor;");
+	$linea.="\"$valor\";";
 }
 $linea=substr($linea,0,-1);
 
@@ -123,8 +122,7 @@ print $linea."\r\n";
 foreach($data as $valor) {
 	$linea="";
 	foreach($valor as $subvalor) {
-	$linea.=iconv("UTF-8", "CP1251", "$subvalor;");
-//		$linea.="\"$subvalor\",";
+		$linea.="\"$subvalor\",";
 	}
 	$linea=substr($linea,0,-1);
 	print $linea."\r\n";

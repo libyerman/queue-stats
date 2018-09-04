@@ -1,54 +1,38 @@
 <?php
 /*
-   Copyright 2007, 2008 Nicolás Gudiño
-
-   This file is part of Asternic Call Center Stats.
-
-    Asternic Call Center Stats is free software: you can redistribute it 
+   Copyright 2017, https://asterisk-pbx.ru
+   
+   This file is part of Asterisk Call Center Stats.
+    Asterisk Call Center Stats is free software: you can redistribute it 
     and/or modify it under the terms of the GNU General Public License as 
     published by the Free Software Foundation, either version 3 of the 
     License, or (at your option) any later version.
 
-    Asternic Call Center Stats is distributed in the hope that it will be 
+    Asterisk Call Center Stats is distributed in the hope that it will be 
     useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Asternic Call Center Stats.  If not, see 
+    along with Asterisk Call Center Stats.  If not, see 
     <http://www.gnu.org/licenses/>.
 */
 
 require_once("config.php");
 include("sesvars.php");
 ?>
-<!-- http://www.house.com.ar/quirksmode -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Asternic Call Center Stats</title>
+	<title>Asterisk Call Center Stats</title>
 	<style type="text/css" media="screen">@import "css/basic.css";</style>
 	<style type="text/css" media="screen">@import "css/tab.css";</style>
 	<style type="text/css" media="screen">@import "css/table.css";</style>
 	<style type="text/css" media="screen">@import "css/fixed-all.css";</style>
-	<script type="text/javascript" src="js/flashobject.js"></script>
 	<script type="text/javascript" src="js/sorttable.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-<!--[if gte IE 5.5000]>
-<style type='text/css'> img { behavior:url(pngbehavior.htc) } </style>
-<![endif]-->
-
-<!--[if IE]>
-<link 
- href="css/fixed-ie.css" 
- rel="stylesheet" 
- type="text/css" 
- media="screen"> 
-<script type="text/javascript"> 
-onload = function() { content.focus() } 
-</script> 
-<![endif]-->
 </head>
 <?php
 
@@ -57,7 +41,7 @@ $graphcolorstack = "&bgcolor=0xF0ffff&bgcolorchart=0xdfedf3&fade1=ff6600&colorba
 
 // ABANDONED CALLS
 
-$query = "SELECT time, queuename, agent, event data1, data2, data3 FROM queue_log ";
+$query = "SELECT time, queuename, agent, event, data1, data2, data3 FROM $DBTable ";
 $query.= "WHERE time >= '$start' AND time <= '$end' ";
 $query.= "AND queuename IN ($queue,'NONE') AND event IN ('ABANDON', 'EXITWITHTIMEOUT','COMPLETECALLER','COMPLETEAGENT','ADDMEMBER','REMOVEMEMBER','AGENTCALLBACKLOGIN','AGENTCALLBACKLOGOFF') ORDER BY time";
 
@@ -72,11 +56,11 @@ $login_by_day   = Array();
 $login_by_hour  = Array();
 $login_by_dw    = Array();
 
-$res = consulta_db($query,$DB_DEBUG,$DB_MUERE,0,$midb);
+$res = mysqli_query($connection, $query);
 
-if(db_num_rows($res)>0) {
+if(mysqli_num_rows($res)>0) {
 
-	while($row=db_fetch_row($res)) {
+	while($row=mysqli_fetch_row($res)) {
 		$partes_fecha = explode(" ",$row[0]);
 		$partes_hora  = explode(":",$partes_fecha[1]);
 
@@ -138,7 +122,7 @@ $end_parts   = explode(" ,:", $end);
 $cover_pdf = $lang["$language"]['queue'].": ".$queue."\n";
 $cover_pdf.= $lang["$language"]['start'].": ".$start_parts[0]."\n";
 $cover_pdf.= $lang["$language"]['end'].": ".$end_parts[0]."\n";
-$cover_pdf.= $lang["$language"]['period'].": ".$period." ".$lang["$language"]['hours']."\n\n";
+$cover_pdf.= $lang["$language"]['period'].": ".$period." ".$lang["$language"]['days']."\n\n";
 $cover_pdf.= $lang["$language"]['number_answered'].": ".$answered." ".$lang["$language"]['calls']."\n";
 $cover_pdf.= $lang["$language"]['number_unanswered'].": ".$unanswered." ".$lang["$language"]['calls']."\n";
 $cover_pdf.= $lang["$language"]['agent_login'].": ".$login."\n";
@@ -170,7 +154,7 @@ $cover_pdf.= $lang["$language"]['agent_logoff'].": ".$logoff."\n";
 	            </TR>
     	        <TR>
         	       	<TD><?php echo $lang["$language"]['period']?>:</TD>
-            	   	<TD><?php echo $period?> <?php echo $lang["$language"]['hours']?></TD>
+            	   	<TD><?php echo $period?> <?php echo $lang["$language"]['days']?></TD>
 	            </TR>
 				</TBODY>
 				</TABLE>
@@ -412,7 +396,7 @@ $cover_pdf.= $lang["$language"]['agent_logoff'].": ".$logoff."\n";
 			</TR>
 			<TR>
 				<TD align=center bgcolor='#fffdf3'>
-    				<?php
+					<?php
 //					swf_bar($query_comb,'718','433',"chart1",1);
 					?>
 				</TD>
@@ -577,6 +561,6 @@ $cover_pdf.= $lang["$language"]['agent_logoff'].": ".$logoff."\n";
 
 </div>
 </div>
-<script type="text/javascript" src="js/wz_tooltip.js"></script>
+<div id='footer'><a href='https://asterisk-pbx.ru'>Asterisk-pbx.ru</a> 2017</div>
 </body>
 </html>

@@ -43,10 +43,10 @@ function swf_bar($values,$width,$height,$divid,$stack) {
    fo.addParam("wmode", "transparent");
 //   fo.addParam("salign", "t");
 	<?php
-		$variables = explode("&",$values);
+		$variables = split("&",$values);
 		foreach ($variables as $deauna) {
 			echo "//$deauna\n";
-			$pedazos = explode("=",$deauna);
+			$pedazos = split("=",$deauna);
 			echo "fo.addVariable('".$pedazos[0]."','".$pedazos[1]."');\n";
 		}
 	?>
@@ -84,7 +84,7 @@ function print_exports($header_pdf,$data_pdf,$width_pdf,$title_pdf,$cover_pdf) {
 //		echo "<input type=image name='pdf' src='images/pdf.gif' ";
 //		tooltip($lang["$language"]['pdfhelp'],200);
 //		echo ">\n";
-		echo "<input type=image name='csv' src='images/excel.gif' "; 
+		echo "<input type=image name='csv' src='images/excel.png' "; 
 		tooltip($lang["$language"]['csvhelp'],200);
 		echo ">\n";
 		echo "</form>";

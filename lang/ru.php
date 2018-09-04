@@ -1,27 +1,23 @@
 <?php
 /*
-   This file is part of Asternic Call Center Stats.
-
-    Asternic Call Center Stats is free software: you can redistribute it 
+   Copyright 2017, https://asterisk-pbx.ru
+   
+   This file is part of Asterisk Call Center Stats.
+    Asterisk Call Center Stats is free software: you can redistribute it 
     and/or modify it under the terms of the GNU General Public License as 
     published by the Free Software Foundation, either version 3 of the 
     License, or (at your option) any later version.
 
-    Asternic Call Center Stats is distributed in the hope that it will be 
+    Asterisk Call Center Stats is distributed in the hope that it will be 
     useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Asternic Call Center Stats.  If not, see 
+    along with Asterisk Call Center Stats.  If not, see 
     <http://www.gnu.org/licenses/>.
 */
 
-// Russian language locale (UTF-8)
-// Nesterov Max
-// braams@yandex.ru
-// 13.08.2008
-// v0.1 for v1.0
 $dayp[0] = "Воскресенье";
 $dayp[1] = "Понедельник";
 $dayp[2] = "Вторник";
@@ -45,10 +41,9 @@ $yearp[11]= "Декабрь";
 
 // Menu options
 $lang['ru']['menu_home']         = "Главная";
-$lang['ru']['menu_answered']     = "Отвеченные";
-$lang['ru']['menu_unanswered']   = "Неотвеченные";
+$lang['ru']['menu_answered']     = "Принятые";
+$lang['ru']['menu_unanswered']   = "Пропущенные";
 $lang['ru']['menu_distribution'] = "Распределение";
-$lang['ru']['menu_stats']   = "Статистика";
 
 // tooltips
 $lang['ru']['pdfhelp'] = "Экспортировать в .pdf";
@@ -57,6 +52,7 @@ $lang['ru']['gotop']   = "Перейти наверх страницы";
 
 // Index page
 $lang['ru']['ALL']               = "ВСЕ";
+$lang['ru']['ALLS']               = "Всего";
 $lang['ru']['lower']             = "Ниже  ...";
 $lang['ru']['higher']            = "Выше ...";
 $lang['ru']['select_queue']      = "Выберите очереди";
@@ -76,18 +72,19 @@ $lang['ru']['selected']          = "Выбранные";
 $lang['ru']['invaliddate']       = "Неправильный диапазон дат";
 
 // Answered page
-$lang['ru']['answered_calls_by_agent'] = "Отвеченные вызовы по агентам";
-$lang['ru']['answered_calls_by_queue'] = "Отвеченные вызовы по очередям";
-$lang['ru']['anws_unanws_by_hour']     = "Отвеченные/Неотвенные по часам";
+$lang['ru']['answered_calls_by_agent'] = "Принятые вызовы по агентам";
+$lang['ru']['agent_in_call_dur'] = "Общее время агента в разговоре (мин.)";
+$lang['ru']['answered_calls_by_queue'] = "Принятые вызовы по очередям";
+$lang['ru']['anws_unanws_by_hour']     = "Принятые/Пропущенные по часам";
 $lang['ru']['report_info']       = "Информация об отчете";
 $lang['ru']['period']            = "Период";
-$lang['ru']['answered_calls']    = "Отвеченные вызовы";
+$lang['ru']['answered_calls']    = "Принятые вызовы";
 $lang['ru']['transferred_calls'] = "Переадресованные вызовы";
 $lang['ru']['secs']              = "сек";
 $lang['ru']['minutes']           = "мин";
 $lang['ru']['hours']             = "ч";
-$lang['ru']['calls']             = "вызовы";
-$lang['ru']['Calls']             = "Вызовы";
+$lang['ru']['calls']             = "выз.";
+$lang['ru']['Calls']             = "Выз.";
 $lang['ru']['agent']             = "Агент";
 $lang['ru']['avg']               = "Средн.";
 $lang['ru']['avg_calltime']      = "Средняя продолжительность";
@@ -98,34 +95,74 @@ $lang['ru']['calltime']          = "Время разговора";
 $lang['ru']['holdtime']          = "Время ожидания";
 $lang['ru']['total_time_agent']  = "Общая длительность по агентам (сек)";
 $lang['ru']['no_calls_agent']    = "Количество звонков по агентам";
-$lang['ru']['call_response']     = "Уровень обслуживания";
+$lang['ru']['call_response']     = "Распределение принятых вызовов по периодам ожидания перед ответом";
 $lang['ru']['within']            = "за ";
 $lang['ru']['answer']            = "Ответ";
 $lang['ru']['count']             = "Количество";
+$lang['ru']['call_abandon']      = "Уровень отказов";
+$lang['ru']['recordfile']        = "Запись";
+$lang['ru']['dur_by_period']     = "Распределение продолжительности вызовов по периодам";
+
 $lang['ru']['delta']             = "Дельта";
 $lang['ru']['disconnect_cause']  = "Причина разъединения";
 $lang['ru']['cause']             = "Причина";
-$lang['ru']['agent_hungup']      = "Агент отключился";
-$lang['ru']['caller_hungup']     = "Звонящий отключился";
-$lang['ru']['caller']            = "Звонящий";
+$lang['ru']['agent_hungup']      = "Агент откл.";
+$lang['ru']['caller_hungup']     = "Абонент откл.";
+$lang['ru']['caller']            = "Абонент";
 $lang['ru']['transfers']         = "Переадресации";
 $lang['ru']['to']                = "На";
+//
 
+$lang['ru']['0-5sec']             = "0-5 сек";
+$lang['ru']['6-10sec']             = "6-10 сек";
+$lang['ru']['11-15sec']             = "11-15 сек";
+$lang['ru']['16-20sec']             = "16-20 сек";
+$lang['ru']['21-25sec']             = "21-25 сек";
+$lang['ru']['26sec']             = "26+ сек";
+$lang['ru']['0-25sec']             = "0-25 сек";
+
+$lang['ru']['10sec']             = "0-10 сек";
+$lang['ru']['20sec']             = "10-20 сек";
+$lang['ru']['30sec']             = "20-30 сек";
+$lang['ru']['40sec']             = "30-40 сек";
+$lang['ru']['50sec']             = "40-50 сек";
+$lang['ru']['60sec']             = "50-60 сек";
+$lang['ru']['61sec']             = "61+ сек";
+$lang['ru']['time']              = "Время";
+$lang['ru']['event']             = "Событие";
+$lang['ru']['callid']            = "Uniqueid";
+$lang['ru']['qcallid']           = "Queue uniqueid";
+$lang['ru']['page']              = "Страница";
+$lang['ru']['of']                = "из";
+//
+$lang['ru']['15sec']             = "15 сек";
+$lang['ru']['_30sec']            = "30 сек";
+$lang['ru']['45sec']             = "45 сек";
+$lang['ru']['_60sec']            = "60 сек";
+$lang['ru']['75sec']             = "75 сек";
+$lang['ru']['90sec']             = "90 сек";
+$lang['ru']['91sec']             = "91+ сек";
 // Unanswered page
-$lang['ru']['unanswered_calls']    = "Неотвеченные вызовы";
-$lang['ru']['number_unanswered']   = "Количество неотвеченных вызовов";
-$lang['ru']['avg_wait_before_dis'] = "Среднее время ожидания перед разъединением";
+$lang['ru']['unanswered_calls']    = "Пропущенные вызовы";
+$lang['ru']['number_unanswered']   = "Количество пропущенных вызовов";
+$lang['ru']['avg_wait_before_dis'] = "Среднее время ожидания перед разъединением (без таймаута)";
 $lang['ru']['avg_queue_pos_at_dis']= "Средняя позиция в очереди при разъединении";
 $lang['ru']['avg_queue_start']     = "Средняя начальная позиция в очереди";
-$lang['ru']['user_abandon']        = "Пользователь покинул";
+$lang['ru']['user_abandon']        = "Польз. покинул";
 $lang['ru']['abandon']             = "Покинул";
 $lang['ru']['timeout']             = "Тайм-аут";
-$lang['ru']['unanswered_calls_qu'] = "Неотвеченные вызовы по очередям";
+$lang['ru']['unanswered_calls_qu'] = "Пропущенные вызовы по очередям";
+$lang['ru']['unanswered_by_period_all'] = "Общее распределение отказов по периодам (без таймаута):";
+$lang['ru']['unanswered_by_period_queue'] = "Распределение отказов в период ожидания по очередям (без таймаута):";
+$lang['ru']['hangupposition'] = "Поз. выхода";
+$lang['ru']['enterposition'] = "Поз. входа";
+$lang['ru']['user_abandon_calls'] = "Детализация: Пользователь покинул";
+$lang['ru']['user_abandon_calls_timeout'] = "Детализация: Таймаут";
 
 // Distribution
-$lang['ru']['totals']              = "Итоги";
-$lang['ru']['number_answered']     = "Количество отвеченных вызовов";
-$lang['ru']['number_unanswered']   = "Количество неотвеченных вызовов";
+$lang['ru']['totals']              = "Обзор";
+$lang['ru']['number_answered']     = "Количество принятых вызовов";
+$lang['ru']['number_unanswered']   = "Количество пропущенных вызовов";
 $lang['ru']['agent_login']         = "Входов агентов";
 $lang['ru']['agent_logoff']        = "Выходов агентов";
 $lang['ru']['call_distrib_day']    = "Распределение вызовов по дням";
@@ -134,27 +171,27 @@ $lang['ru']['call_distrib_week']   = "Распределение вызовов 
 $lang['ru']['date']                = "Дата";
 $lang['ru']['day']                 = "День";
 $lang['ru']['days']                = "Дней";
-$lang['ru']['hour']                = "Час";
-$lang['ru']['answered']            = "Отвеченных";
-$lang['ru']['unanswered']          = "Неотвеченных";
+$lang['ru']['hour']                = "Часы";
+$lang['ru']['answered']            = "Принято";
+$lang['ru']['unanswered']          = "Потеряно";
 $lang['ru']['percent_answered']    = "% Отв";
 $lang['ru']['percent_unanswered']  = "% Неотв";
 $lang['ru']['login']               = "Вход";
 $lang['ru']['logoff']              = "Выход";
-$lang['ru']['answ_by_day']         = "Отвеченные вызовы по дням недели";
-$lang['ru']['unansw_by_day']       = "Неотвеченные вызовы по дням недели";
+$lang['ru']['answ_by_day']         = "Принятые вызовы по дням недели";
+$lang['ru']['unansw_by_day']       = "Пропущенные вызовы по дням недели";
 $lang['ru']['avg_call_time_by_day']= "Средняя длительность звонка по дням недели";
 $lang['ru']['avg_hold_time_by_day']= "Среднее длительность ожидания по дням недели";
-$lang['ru']['answ_by_hour']        = "Отвеченные вызовы по часам";
-$lang['ru']['unansw_by_hour']      = "Неотвеченные вызовы по часам";
+$lang['ru']['answ_by_hour']        = "Принятые вызовы по часам";
+$lang['ru']['unansw_by_hour']      = "Пропущенные вызовы по часам";
 $lang['ru']['avg_call_time_by_hr'] = "Средняя длительность звонка по часам";
 $lang['ru']['avg_hold_time_by_hr'] = "Средняя длительность ожидания по часам";
 $lang['ru']['page']                = "Страница";
 $lang['ru']['export']              = "Экспорт таблицы:";
 
-$lang['ru']['server_time']         = "Время сервера:";
-$lang['ru']['php_parsed']          = "Парсинг: ";
-$lang['ru']['seconds']             = "сек.";
+$lang['ru']['server_time']          = "Время сервера:";
+$lang['ru']['php_parsed']           = "Парсинг: ";
+$lang['ru']['seconds']              = "сек.";
 $lang['ru']['current_agent_status'] = "Текущий статус агента";
 $lang['ru']['hide_loggedoff']       = "Скрыть незарег.";
 $lang['es']['agent_status']         = "Статус Агента";
@@ -180,8 +217,10 @@ $lang['ru']['calls_waiting_detail'] = "Вызовы в очереди подро
 $lang['ru']['position']             = "Позиция";
 $lang['ru']['callerid']             = "Callerid";
 $lang['ru']['wait_time']            = "Время ожидания";
-
-
-
+//cdr
+$lang['ru']['cdr']                  = "RAW";
+$lang['ru']['filter']               = "Выбрать";
+$lang['ru']['page_rows']            = "Строк:";
+$lang['ru']['hidden_ringnoanswer']  = "Скрыть RINGNOANSWER";
 
 ?>

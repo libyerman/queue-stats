@@ -63,7 +63,6 @@ $lang['en']['start']   	         = "Start Date";
 $lang['en']['end']   	         = "End Date";
 $lang['en']['display_report']    = "Display Report";
 $lang['en']['shortcuts']         = "Shortcuts";
-$lang['en']['shift']             = "Shift";
 $lang['en']['today']             = "Today";
 $lang['en']['this_week']         = "This week";
 $lang['en']['this_month']        = "This month";
@@ -74,6 +73,7 @@ $lang['en']['invaliddate']       = "Invalid date range";
 
 // Answered page
 $lang['en']['answered_calls_by_agent'] = "Answered Calls by Agent";
+$lang['ru']['agent_in_call_dur'] = "Duration agent in call (min)";
 $lang['en']['answered_calls_by_queue'] = "Answered Calls by Queue";
 $lang['en']['anws_unanws_by_hour']     = "Answered/Unanswered by Hour";
 $lang['en']['report_info']       = "Report Info";
@@ -107,7 +107,31 @@ $lang['en']['caller_hungup']     = "Caller hung up";
 $lang['en']['caller']            = "Caller";
 $lang['en']['transfers']         = "Transfers";
 $lang['en']['to']                = "To";
+$lang['ru']['answered_calls']     = "Answered calls";
+//
+$lang['en']['10sec']             = "0-10 sec";
+$lang['en']['20sec']             = "10-20 sec";
+$lang['en']['30sec']             = "20-30 sec";
+$lang['en']['40sec']             = "30-40 sec";
+$lang['en']['50sec']             = "40-50 sec";
+$lang['en']['60sec']             = "50-60 sec";
+$lang['en']['61sec']             = "61+ sec";
+$lang['en']['time']              = "Time";
+$lang['en']['event']             = "Event";
+$lang['en']['callid']            = "Uniqueid";
+$lang['en']['qcallid']            = "Queue uniqueid";
+$lang['en']['totalpages']            = "Total pages";
+$lang['en']['page']              = "Page";
+$lang['en']['of']                = "of";
 
+$lang['en']['15sec']  = "15 sec";
+$lang['en']['_30sec']  = "30 sec";
+$lang['en']['45sec']  = "45 sec";
+$lang['en']['_60sec']  = "60 sec";
+$lang['en']['75sec']  = "75 sec";
+$lang['en']['90sec']  = "90 sec";
+$lang['en']['91sec']  = "91+ sec";
+//
 // Unanswered page
 $lang['en']['unanswered_calls']    = "Unanswered Calls";
 $lang['en']['number_unanswered']   = "Number of Unanswered Calls";
@@ -118,7 +142,11 @@ $lang['en']['user_abandon']        = "User Abandon";
 $lang['en']['abandon']             = "Abandon";
 $lang['en']['timeout']             = "Timeout";
 $lang['en']['unanswered_calls_qu'] = "Unanswered Calls by Queue";
-
+$lang['en']['unanswered_by_period_all'] = "disconnect from the queue during the waiting period:";
+$lang['en']['unanswered_by_period_queue'] = "disconnect from the queue during the waiting period:";
+$lang['en']['hangupposition'] = "Hangup pos.";
+$lang['en']['enterposition'] = "Enter pos.";
+$lang['en']['user_abandon_calls'] = "User abandon";
 // Distribution
 $lang['en']['totals']              = "Totals";
 $lang['en']['number_answered']     = "Number of Answered Calls";
@@ -148,7 +176,8 @@ $lang['en']['avg_call_time_by_hr'] = "Average Call Time by hour";
 $lang['en']['avg_hold_time_by_hr'] = "Average Hold Time by hour";
 $lang['en']['page']                = "Page";
 $lang['en']['export']              = "Export table:";
-
+//cdr
+$lang['ru']['cdr']                  = "Q-CDR";
 // Realtime
 $lang['en']['server_time']         = "Server Time:";
 $lang['en']['php_parsed']          = "PHP parsed this page in ";

@@ -1,13 +1,13 @@
 html { min-width: 600px; }
 
 body {
-	font-size: 12px;
-    font-family: verdana,sans-serif;
+	font-size: 14px;
+    font-family: open sans,roboto,sans-serif;
 }
 
 div, caption, td, th, h2, h3, h4 { /* redundant rules for bad browsers  */  
-	font-size: 12px;
-    font-family: verdana,sans-serif;
+	font-size: 14px;
+    font-family: open sans,roboto,sans-serif;
 	voice-family: "\"}\"";
 	voice-family: inherit;
 	color: #333;
@@ -15,7 +15,7 @@ div, caption, td, th, h2, h3, h4 { /* redundant rules for bad browsers  */
 .clearhack { display: inline; } /*Clears Box Model Hack in IE5*/
 
 body {
-	background: #99cccc;
+	background: #fff;
 	color: #333;
 	margin: 0; /* margin and padding only necessary to cater for Mac IE5 */
 	padding: 0;
@@ -95,4 +95,6 @@ html, body {
 .footer, .push {
        height: 4em;
 }
-
+#footer {
+	text-align: center;
+}

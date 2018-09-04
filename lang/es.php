@@ -40,6 +40,51 @@ $yearp[9] = "Octubre";
 $yearp[10]= "Noviembre";
 $yearp[11]= "Diciembre";
 
+//Added
+
+$lang['es']['queues']  	         = "Colas";
+$lang['es']['agents']  	         = "Agentes";
+$lang['es']['sync']   	         = "Sincronización";
+$lang['es']['yesterday']         = "Ayer";
+$lang['es']['menu_detail_answered'] = "CDR Atend.";
+$lang['es']['menu_detail_unanswered'] = "CDR Sin Atend.";
+$lang['es']['realtime']          = "Realtime";
+$lang["es"]['0-5sec']            = "0-5sec";
+$lang["es"]['6-10sec']           = "6-10sec";
+$lang["es"]['11-15sec']          = "11-15sec";
+$lang["es"]['16-20sec']          = "16-20sec";
+$lang["es"]['21-25sec']          = "21-25sec";
+$lang["es"]['26sec']             = "+26sec";
+$lang["es"]['15sec']             = "15sec";
+$lang["es"]['_30sec']            = "30sec";
+$lang["es"]['45sec']             = "45sec";
+$lang["es"]['_60sec']            = "60sec";
+$lang["es"]['75sec']             = "75sec";
+$lang["es"]['90sec']             = "90sec";
+$lang["es"]['91sec']             = "+91sec";
+$lang["es"]['ALLS']              = "Todas";
+$lang["es"]['search']            = "Buscar";
+$lang["es"]['uniqueid']          = "ID Único";   
+$lang["es"]['enterposition']     = "Posición de entrada";   
+$lang["es"]['hangupposition']    = "Posición de salida";   
+$lang["es"]['connposition']     = "Posición al conectar";   
+$lang["es"]['totalfound']        = "Total encontrados";
+$lang["es"]['cod_event_queue']   = "Codificación eventos colas";
+$lang["es"]['envent']            = "Evento";
+$lang["es"]['holdtime_answer']   = "Tiempo Espera antes de Responder";
+$lang["es"]['calltime_agent']    = "Tiempo de llamada del agente";
+$lang["es"]['calltime_agent']    = "Tiempo de llamada del agente";
+$lang["es"]['holdtime_queue']    = "Tiempo de espera de cola";
+$lang["es"]['search_all_time']   = "Buscar todo el tiempo";
+$lang["es"]['hidden_ringnoanswer']   = "Ocultar RING sin respuesta";
+
+
+
+
+
+
+//Origin
+
 $lang['es']['menu_home']         = "Inicio";
 $lang['es']['menu_answered']     = "Atendidas";
 $lang['es']['menu_unanswered']   = "Sin atender";

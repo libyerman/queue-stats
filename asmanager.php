@@ -90,7 +90,7 @@ class AsteriskManager
         return $parameters;
     }
     
-    function connect($server='localhost', $username='admin', $secret='amp111') {
+    function connect($server='172.16.200.1', $username='qpanel', $secret='qpanelR3p0RT') {
         // Extract port if specified
         if(strpos($server, ':') !== false) {
             $parts = explode(':', $server);
