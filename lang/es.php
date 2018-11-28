@@ -77,7 +77,11 @@ $lang["es"]['calltime_agent']    = "Tiempo de llamada del agente";
 $lang["es"]['holdtime_queue']    = "Tiempo de espera de cola";
 $lang["es"]['search_all_time']   = "Buscar todo el tiempo";
 $lang["es"]['hidden_ringnoanswer']   = "Ocultar RING sin respuesta";
-
+$lang["es"]['transferto']   = "transferida a";
+$lang["es"]['call_attransfer']   = "Transferencia atendida";
+$lang["es"]['call_bltransfer']   = "Transferencia desatendida";
+$lang["es"]['dur_by_period']   = "Duración por periodo";
+$lang["es"]['agent_in_call_dur']   = "Duración de llamadas por Agente";
 
 
 

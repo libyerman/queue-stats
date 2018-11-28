@@ -24,7 +24,7 @@ $manager_secret = "pass";
 
 
 // Available languages "es", "en", "ru", "de", "fr"
-$language = getenv('QST_LANG');
+$language = "es";
 
 require_once("lang/$language.php");
 
@@ -35,7 +35,7 @@ $self = $_SERVER['PHP_SELF'];
 $DB_DEBUG = false; 
 
 //error reporting
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 session_start();
 header('content-type: text/html; charset: utf-8'); 

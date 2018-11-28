@@ -40,6 +40,7 @@ if(isset($_POST['pagerows'])) {
    $_SESSION['QSTATS']['pagerows'] = 100;
 }
 
+
 if ( (isset($_POST['callerid_search'])) && (strlen($_POST['callerid_search']) > 0) ) {
     $callerid_search = $_POST['callerid_search'];
     $sql = "select distinct(callid) from $DBTable where time >= '$start' AND time <= '$end' and data2 like '%$callerid_search%'";
@@ -48,18 +49,33 @@ if ( (isset($_POST['callerid_search'])) && (strlen($_POST['callerid_search']) > 
 		$callid_search .= ",'".$temp['callid']."'";
 		}	
     $callid_search = substr($callid_search, 1);	
-    $sql = "select time, callid, queuename, agent, event, data1, data2, data3 from $DBTable where time >= '$start' AND time <= '$end'
-            and event in ('COMPLETECALLER','COMPLETEAGENT','ENTERQUEUE') and callid in ($callid_search) order by callid";
+    $sql = "select b.time as time, a.time as atime, a.callid as callid, a.queuename as queuename, a.agent as agent, a.event as event, a.data1 as data1, a.data2 as data2, a.data3 as data3, a.data as data4, a.data5 as data5, b.data2 as callerid 
+            from $DBTable as a LEFT JOIN $DBTable as b 
+            on a.callid=b.callid and b.event='ENTERQUEUE'
+            where b.time >= '$start' AND b.time <= '$end'
+            and a.event in ('TRANSFER','BLINDTRANSFER','ATTENDEDTRANSFER','COMPLETECALLER','COMPLETEAGENT') 
+            and a.callid in ($callid_search) order by a.callid";
     $rescomplete = mysqli_query($connection, $sql);
 } elseif ( (isset($_POST['outagent'])) && (strlen($_POST['outagent']) > 0) ) {
     $outagent = $_POST['outagent'];
-    $sql = "select time, callid, queuename, agent, event, data1, data2, data3 from $DBTable where time >= '$start' AND time <= '$end'
-            and event in ('COMPLETECALLER','COMPLETEAGENT','ENTERQUEUE')  and agent in ('$outagent','NONE') order by callid";
+    $sql = "select b.time as time, a.time as atime, a.callid as callid, a.queuename as queuename, a.agent as agent, a.event as event, a.data1 as data1, a.data2 as data2, a.data3 as data3, a.data as data4, a.data5 as data5, b.data2 as callerid 
+            from $DBTable as a LEFT JOIN $DBTable as b 
+            on a.callid=b.callid and b.event='ENTERQUEUE'
+            where b.time >= '$start' AND b.time <= '$end'
+            and a.event in ('TRANSFER','BLINDTRANSFER','ATTENDEDTRANSFER','COMPLETECALLER','COMPLETEAGENT')
+            and a.agent in ('$outagent','NONE') order by a.callid";
     $rescomplete = mysqli_query($connection, $sql);
 } else {
-    $sql = "select time, callid, queuename, agent, event, data1, data2, data3 from $DBTable
-           where time >= '$start' AND time <= '$end' AND agent IN ($agent , 'NONE') and queuename in ($queue)
-           and event in ('COMPLETECALLER','COMPLETEAGENT','ENTERQUEUE') order by callid, time limit $page_rows";
+    
+    $sql = "select b.time as time, a.time as atime, a.callid as callid, a.queuename as queuename, a.agent as agent, a.event as event, a.data1 as data1, a.data2 as data2, a.data3 as data3, a.data as data4, a.data5 as data5, b.data2 as callerid 
+            from $DBTable as a LEFT JOIN $DBTable as b 
+            on a.callid=b.callid and b.event='ENTERQUEUE'
+            where b.time >= '$start' AND b.time <= '$end'
+            AND a.agent IN ($agent , 'NONE') 
+            and a.queuename in ($queue)
+            and a.event in ('TRANSFER','BLINDTRANSFER','ATTENDEDTRANSFER','COMPLETECALLER','COMPLETEAGENT') 
+            order by a.callid, time limit $page_rows";
+
     $rescomplete = mysqli_query($connection, $sql);
 }
 mysqli_close($connection);
@@ -106,7 +122,7 @@ $end_parts   = explode(" ,:", $end);
 	&nbsp;&nbsp;&nbsp;<b><?php echo $lang["$language"]['page_rows'];?></b>&nbsp;
 <select onchange="this.form.submit()" id="pagerows" name="pagerows">
   <option selected="<?php echo $_SESSION['QSTATS']['pagerows'];?>"><?php echo $_SESSION['QSTATS']['pagerows'] / 2;?></option>
-  <option value="100">50</option>
+  <option value="100">500</option>
   <option value="200">100</option>
   <option value="1000">500</option>
   <option value="2000">1000</option>
@@ -137,54 +153,75 @@ $title_pdf=$lang["$language"]['answered_calls'];
 $data_pdf = array();
 
 foreach($rescomplete as $row) {
-switch($row['event']) {
-    case "ENTERQUEUE": 
-        $callerid = $row['data2'];
-     $break;
+$event = $row['event'];
+$callerid = $row['callerid'];
+
+switch($event) {
+
+    case "TRANSFER":
+        $holdtime = seconds2minutes($row['data3']);
+        $calltime = seconds2minutes( strtotime($row['atime'])  - (strtotime($row['time']) + $row['data3']));
+        $time = strtotime($row['time']); 
+     break;
+    case "BLINDTRANSFER":
+        $holdtime = seconds2minutes(intval($row['data3']));
+        $calltime = seconds2minutes( strtotime($row['atime'])  - (strtotime($row['time']) + $row['data3']));
+        $time = strtotime($row['time']);
+     break; 
+    case "ATTENDEDTRANSFER":
+        $holdtime = seconds2minutes($row['data3']);
+        $calltime = seconds2minutes( strtotime($row['atime'])  - (strtotime($row['time']) + $row['data3']));
+        $time = strtotime($row['time']); 
+     break;
     case "COMPLETEAGENT":
         $holdtime = seconds2minutes($row['data1']);
         $calltime = seconds2minutes($row['data2']);
-        $time = strtotime($row['time']) - ($row['data1'] + $row['data2']); 
-     $break;
+        $time = strtotime($row['time']); 
+     break;
     case "COMPLETECALLER":
         $holdtime = seconds2minutes($row['data1']);
         $calltime = seconds2minutes($row['data2']);
-        $time = strtotime($row['time']) - ($row['data1'] + $row['data2']); 
-     $break;
+        $time = strtotime($row['time']); 
+     break;
+  }
+
+  if ( ($row['event'] == "BLINDTRANSFER") || ($row['event'] == "TRANSFER") || ($row['event'] == "ATTENDEDTRANSFER") ) {
+    $cause_hangup=$lang["$language"]['transferto']." ".$row['data1'] ;
+}
 if ($row['event']=="COMPLETEAGENT") {
         $cause_hangup=$lang["$language"]['agent_hungup'] ;
-        } elseif ($row['event']=="COMPLETECALLER") {
+} elseif ($row['event']=="COMPLETECALLER") {
         $cause_hangup=$lang["$language"]['caller_hungup'];
-        } 	
-if ( ($row['event'] == "COMPLETEAGENT") || ($row['event'] == "COMPLETECALLER") ) {
+} 	
+if ( ($row['event'] == "COMPLETEAGENT") || ($row['event'] == "COMPLETECALLER") || ($row['event'] == "BLINDTRANSFER") || ($row['event'] == "TRANSFER") || ($row['event'] == "ATTENDEDTRANSFER")) {
         $page_rows2 += count($row['event']);
-	    $tmpError =  $row['callid'] ;
-	    $tmpRec = '<audio controls preload="none">
-	           <source src="dl.php?f=[_file]">
-			   </audio>
-			   <a href="dl.php?f=[_file]">' . $row['callid'] . '</a>';
-	
-	    $rec['filename'] = $row['callid'] . '.mp3';	
-	    $rec['path'] = '/home/asterisk/monitor/mp3/'.$rec['filename'];
-	
-	if (file_exists($rec['path']) && preg_match('/(.*)\.mp3$/i', $rec['filename'])) {
-		$tmpRes = str_replace('[_file]', base64_encode($rec['filename']), $tmpRec);
-	} else { 
-		$tmpRes = $tmpError; 
+        $tmpError =  $row['callid'] ;
+        $tmpRec = '<audio controls preload="none">
+            <source src="dl.php?f=[_file]">
+            </audio>
+            <a href="dl.php?f=[_file]">' . $row['callid'] . '</a>';
+    
+        $rec['filename'] = $row['callid'] . '.mp3';	
+        $rec['path'] = '/home/asterisk/monitor/mp3/'.$rec['filename'];
+    
+    if (file_exists($rec['path']) && preg_match('/(.*)\.mp3$/i', $rec['filename'])) {
+        $tmpRes = str_replace('[_file]', base64_encode($rec['filename']), $tmpRec);
+    } else { 
+        $tmpRes = $tmpError; 
     }
-echo "<TR><TD>" . date('Y-m-d H:i:s', $time) . "</TD>
-		  <TD>" . $callerid . "</TD>
-	      <TD>" . $row['queuename'] . "</TD>
-	      <TD>" . $row['agent'] . "</TD>
-	      <TD>" . $cause_hangup . "</TD>
-	      <TD>" . $holdtime . "</TD>
-	      <TD>" . $calltime . "</TD>
-	      <TD>" . $tmpRes. "</TD>
-	      </TR>\n";
-		$linea_pdf = array($time,$callerid,$row['queuename'],$row['agent'],$cause_hangup,$holdtime,$calltime);
-        $data_pdf[]=$linea_pdf;
-   }
-  }
+    echo "<TR><TD>" . date('Y-m-d H:i:s', $time) . "</TD>
+        <TD>" . $callerid . "</TD>
+        <TD>" . $row['queuename'] . "</TD>
+        <TD>" . $row['agent'] . "</TD>
+        <TD>" . $cause_hangup . "</TD>
+        <TD>" . $holdtime . "</TD>
+        <TD>" . $calltime . "</TD>
+        <TD>" . $tmpRes. "</TD>
+        </TR>\n";
+    $linea_pdf = array($time,$callerid,$row['queuename'],$row['agent'],$cause_hangup,$holdtime,$calltime);
+    $data_pdf[]=$linea_pdf;
+}
+
  }
 mysqli_free_result($rescomplete);
 

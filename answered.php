@@ -36,6 +36,64 @@ include("sesvars.php");
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 </head>
 <?php
+
+// Call Transfer 
+$query = "SELECT time, queuename, agent, event, data3, data4, data5 FROM $DBTable
+WHERE time >= '$start' AND time <= '$end' AND event IN ('BLINDTRANSFER','TRANSFER','ATTENDEDTRANSFER')
+AND queuename IN ($queue) AND agent in ($agent)";
+
+$res = mysqli_query($connection, $query);
+while($row=mysqli_fetch_row($res)) {
+    $total_calls2["$row[2]"]++;
+    $record["$row[2]"][]=$row[0]."|".$row[1]."|".$row[3]."|".$row[4];
+    $total_hold2["$row[2]"]+=$row[4];
+    $total_time2["$row[2]"]+=$row[5];
+    $grandtotal_hold+=$row[4];
+    $grandtotal_time+=$row[5];
+    $grandtotal_calls++;
+    $hold["$row[1]"][]=$row[4];
+    if ($row[4]<=15) {
+      $hold15["$row[1]"] += count($row[4]);
+    } elseif (($row[4] >= 16)&&($row[4] <= 30)) {
+      $hold30["$row[1]"] += count($row[4]);
+    } elseif (($row[4] >= 31)&&($row[4] <= 45)) {
+      $hold45["$row[1]"] += count($row[4]);
+    } elseif (($row[4] >= 46)&&($row[4] <= 60)) {
+      $hold60["$row[1]"] += count($row[4]);
+    } elseif (($row[4] >= 61)&&($row[4] <= 75)) {
+      $hold75["$row[1]"] += count($row[4]);
+    } elseif (($row[4] >= 76)&&($row[4] <= 90)) {
+      $hold90["$row[1]"] += count($row[4]);
+    } elseif ($row[4] >= 91) {
+      $hold91["$row[1]"] += count($row[4]);
+    }
+      $durall["$row[1]"][]=$row[5];
+    if ($row[5]<=5) {
+      $dur5["$row[1]"] += count($row[5]);
+    } elseif (($row[5] >= 6)&&($row[5] <= 10)) {
+      $dur10["$row[1]"] += count($row[5]);
+    } elseif (($row[5] >= 11)&&($row[5] <= 15)) {
+      $dur15["$row[1]"] += count($row[5]);
+    } elseif (($row[5] >= 16)&&($row[5] <= 20)) {
+      $dur20["$row[1]"] += count($row[5]);
+    } elseif (($row[5] >= 21)&&($row[5] <= 25)) {
+      $dur25["$row[1]"] += count($row[5]);
+    } 	
+
+
+    if	($row[3] == "BLINDTRANSFER") {
+      $action_blindtransfer = $lang["$language"]['call_bltransfer'] ;
+      $num_blindtransfer += count($row[3]);
+    } elseif ($row[3] == "ATTENDEDTRANSFER") {
+      $action_attransfer = $lang["$language"]['call_attransfer'];
+      $num_attransfer += count($row[3]);
+    }	elseif ($row[3] == "TRANSFER") {
+      $action_transfer = $lang["$language"]['call_attransfer'];
+      $num_transfer += count($row[3]);
+    }  
+  
+}
+
 // This query shows every call for agents, we collect into a named array the values of holdtime and calltime
 $query = "SELECT time, queuename, agent, event, data1, data2, data3 FROM $DBTable
 WHERE time >= '$start' AND time <= '$end' AND event IN ('COMPLETECALLER', 'COMPLETEAGENT')
@@ -50,34 +108,42 @@ while($row=mysqli_fetch_row($res)) {
     $grandtotal_hold+=$row[4];
     $grandtotal_time+=$row[5];
     $grandtotal_calls++;
-$hold["$row[1]"][]=$row[4];
-if ($row[4]<=15) {
- $hold15["$row[1]"] += count($row[4]);
- } elseif (($row[4] >= 16)&&($row[4] <= 30)) {
- $hold30["$row[1]"] += count($row[4]);
- } elseif (($row[4] >= 31)&&($row[4] <= 45)) {
- $hold45["$row[1]"] += count($row[4]);
- } elseif (($row[4] >= 46)&&($row[4] <= 60)) {
- $hold60["$row[1]"] += count($row[4]);
- } elseif (($row[4] >= 61)&&($row[4] <= 75)) {
- $hold75["$row[1]"] += count($row[4]);
- } elseif (($row[4] >= 76)&&($row[4] <= 90)) {
- $hold90["$row[1]"] += count($row[4]);
- } elseif ($row[4] >= 91) {
- $hold91["$row[1]"] += count($row[4]);
- }
-$durall["$row[1]"][]=$row[5];
-if ($row[5]<=5) {
- $dur5["$row[1]"] += count($row[5]);
- } elseif (($row[5] >= 6)&&($row[5] <= 10)) {
- $dur10["$row[1]"] += count($row[5]);
- } elseif (($row[5] >= 11)&&($row[5] <= 15)) {
- $dur15["$row[1]"] += count($row[5]);
- } elseif (($row[5] >= 16)&&($row[5] <= 20)) {
- $dur20["$row[1]"] += count($row[5]);
- } elseif (($row[5] >= 21)&&($row[5] <= 25)) {
- $dur25["$row[1]"] += count($row[5]);
- } 	
+    $hold["$row[1]"][]=$row[4];
+    if ($row[4]<=15) {
+      $hold15["$row[1]"] += count($row[4]);
+    } elseif (($row[4] >= 16)&&($row[4] <= 30)) {
+      $hold30["$row[1]"] += count($row[4]);
+    } elseif (($row[4] >= 31)&&($row[4] <= 45)) {
+      $hold45["$row[1]"] += count($row[4]);
+    } elseif (($row[4] >= 46)&&($row[4] <= 60)) {
+      $hold60["$row[1]"] += count($row[4]);
+    } elseif (($row[4] >= 61)&&($row[4] <= 75)) {
+      $hold75["$row[1]"] += count($row[4]);
+    } elseif (($row[4] >= 76)&&($row[4] <= 90)) {
+      $hold90["$row[1]"] += count($row[4]);
+    } elseif ($row[4] >= 91) {
+      $hold91["$row[1]"] += count($row[4]);
+    }
+    $durall["$row[1]"][]=$row[5];
+    if ($row[5]<=5) {
+      $dur5["$row[1]"] += count($row[5]);
+    } elseif (($row[5] >= 6)&&($row[5] <= 10)) {
+      $dur10["$row[1]"] += count($row[5]);
+    } elseif (($row[5] >= 11)&&($row[5] <= 15)) {
+      $dur15["$row[1]"] += count($row[5]);
+    } elseif (($row[5] >= 16)&&($row[5] <= 20)) {
+      $dur20["$row[1]"] += count($row[5]);
+    } elseif (($row[5] >= 21)&&($row[5] <= 25)) {
+      $dur25["$row[1]"] += count($row[5]);
+    } 	
+
+    if	($row[3] == "COMPLETEAGENT") {
+      $action_agent = $lang["$language"]['agent_hungup'] ;
+      $num_completeagent += count($row[3]);
+    } elseif ($row[3] == "COMPLETECALLER") {
+      $action_caller = $lang["$language"]['caller_hungup'];
+      $num_completecaller += count($row[3]);
+    }	
 }
 $total_calls_print=array_sum($total_calls2);
 $total_duration_print=ceil(array_sum($total_time2) / 60);
@@ -501,17 +567,14 @@ google.charts.load('current', {packages: ['corechart', 'line']});
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
 <?php
+
 echo "['Cause', 'Events'],\n";
-foreach($res as $row){
-    if	($row['event'] == "COMPLETEAGENT") {
-         $action_agent = $lang["$language"]['agent_hungup'] ;
-		 $num += count($row['event']);
-    } elseif ($row['event'] == "COMPLETECALLER") {
-         $action_caller = $lang["$language"]['caller_hungup'];
-		 $num2 += count($row['event']);
-     }	 
-    }
-echo "['".$action_agent."', ".$num."],['".$action_caller."', ".$num2."]\n";	
+
+#echo "['".$action_agent."', ".$num_agent."],['".$action_caller."', ".$num_caller."],['".$action_transfer."', ".$num_transfer."],['".$action_attransfer."', ".$num_attransfer."],['".$action_blindtransfer."', ".$num_blindtransfer."]\n";	
+
+#echo "['Cause', 'BLTransfer'],\n";
+
+echo "['".$action_agent."', ".$num_completeagent."],['".$action_caller."', ".$num_completecaller."],['".$action_attransfer."', ".$num_attransfer."],['".$action_blindtransfer."', ".$num_blindtransfer."]\n";	
 	mysqli_free_result($res);
 ?>
         ]);

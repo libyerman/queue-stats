@@ -91,11 +91,15 @@ function print_exports($header_pdf,$data_pdf,$width_pdf,$title_pdf,$cover_pdf) {
 }
 
 function seconds2minutes($segundos) {
-    $minutos = intval($segundos / 60);
-    $segundos = $segundos % 60;
-    if(strlen($segundos)==1) {
-		$segundos = "0".$segundos;
-	}
-    return "$minutos:$segundos";
+//    $minutos = intval($segundos / 60);
+//    $segundos = $segundos % 60;
+//    if(strlen($segundos)==1) {
+//		$segundos = "0".$segundos;
+//	}
+//	return "$minutos:$segundos";
+
+
+	$time=gmdate('H:i:s', $segundos);
+	return $time;
 }
 ?>
