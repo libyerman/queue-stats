@@ -65,6 +65,8 @@ if(isset($_SESSION['QSTATS']['hideloggedoff'])) {
                 }
  
 	</script>
+    <?php include 'header.php'; ?>
+
 </head>
 <body>
 <?php include("menu.php"); ?>
@@ -112,6 +114,6 @@ for($a=1;$a<10;$a++) {
 </div>
 </div>
 </div>
-<script type="text/javascript" src="js/wz_tooltip.js"></script>
 </body>
+<?php include 'footer.php'; ?>
 </html>

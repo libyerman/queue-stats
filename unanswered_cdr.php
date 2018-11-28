@@ -31,6 +31,7 @@ include("sesvars.php");
     <style type="text/css" media="screen">@import "css/table.css";</style>
     <style type="text/css" media="screen">@import "css/fixed-all.css";</style>
 	<script type="text/javascript" src="js/sorttable.js"></script>
+    <?php include 'header.php'; ?>
 </head>
 <?php
 //if(isset($_POST['limit'])) {
@@ -168,6 +169,6 @@ print_exports($header_pdf,$data_pdf,$width_pdf,$title_pdf,$cover_pdf);
 	  <br/>	
      </div>
     </div>
-   <div id="footer"><a href='https://asterisk-pbx.ru'>Asterisk-pbx.ru</a> 2017</div>
   </body>
+  <?php include 'footer.php'; ?>
  </html>

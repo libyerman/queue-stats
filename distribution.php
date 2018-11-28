@@ -33,6 +33,9 @@ include("sesvars.php");
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
+    <?php include 'header.php'; ?>
+
+
 </head>
 <?php
 
@@ -561,6 +564,7 @@ $cover_pdf.= $lang["$language"]['agent_logoff'].": ".$logoff."\n";
 
 </div>
 </div>
-<div id='footer'><a href='https://asterisk-pbx.ru'>Asterisk-pbx.ru</a> 2017</div>
 </body>
+<?php include 'footer.php'; ?>
+
 </html>

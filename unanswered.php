@@ -34,6 +34,7 @@ include("sesvars.php");
     <script type="text/javascript" src="js/1.10.2/jquery.min.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<?php include 'header.php'; ?>
 </head>
 <?php
 $sql = "SELECT time, callid, queuename, event, data1, data2, data3 FROM $DBTable WHERE time >= '$start' AND time <= '$end' AND event IN ('ABANDON', 'EXITWITHTIMEOUT') AND queuename IN ($queue)";
@@ -391,6 +392,6 @@ google.charts.load('current', {packages: ['corechart', 'line']});
 
 </div>
 </div>
-<div id='footer'><a href='https://asterisk-pbx.ru'>Asterisk-pbx.ru</a> 2017</div>
 </body>
+<?php include 'footer.php'; ?>
 </html>

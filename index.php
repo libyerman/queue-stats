@@ -89,12 +89,14 @@ mysqli_close($connection);
 
 <!DOCTYPE html>
 <head>
+    <?php include 'header.php'; ?>
+
 	<title>Asternic Call Center Stats</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<style type="text/css" media="screen">@import "css/basic.css";</style>
 	<style type="text/css" media="screen">@import "css/tab.css";</style>
 	<style type="text/css" media="screen">@import "css/fixed-all.css";</style>
-	<script src="js/validmonth.js" type="text/javascript" language="javascript1.2"></script>
+	<script src="js/validmonth.js" type="text/javascript" language="javascript1.2">
 </script>
 <script type="text/javascript">
 </script>
@@ -606,4 +608,6 @@ echo "<BR>";
 	</div>
 </div>
 </body>
+<?php include 'footer.php'; ?>
+
 </html>
