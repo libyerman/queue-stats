@@ -44,9 +44,9 @@ $graphcolorstack = "&bgcolor=0xF0ffff&bgcolorchart=0xdfedf3&fade1=ff6600&colorba
 
 // ABANDONED CALLS
 
-$query = "SELECT time, queuename, agent, event, data1, data2, data3 FROM $DBTable ";
+$query = "SELECT time, queuename, agent, event, data1, data2, data3, data4, data5 FROM $DBTable ";
 $query.= "WHERE time >= '$start' AND time <= '$end' ";
-$query.= "AND queuename IN ($queue,'NONE') AND event IN ('ABANDON', 'EXITWITHTIMEOUT','COMPLETECALLER','COMPLETEAGENT','ADDMEMBER','REMOVEMEMBER','AGENTCALLBACKLOGIN','AGENTCALLBACKLOGOFF') ORDER BY time";
+echo $query.= "AND queuename IN ($queue,'NONE') AND event IN ('TRANSFER','BLINDTRANSFER','ATTENDEDTRANSFER','ABANDON', 'EXITWITHTIMEOUT','COMPLETECALLER','COMPLETEAGENT','ADDMEMBER','REMOVEMEMBER','AGENTCALLBACKLOGIN','AGENTCALLBACKLOGOFF') ORDER BY time";
 
 $query_comb     = "";
 $login          = 0;
@@ -79,20 +79,39 @@ if(mysqli_num_rows($res)>0) {
 			$unans_by_hour["$partes_hora[0]"]++;
 			$unans_by_dw["$day_of_week"]++;
 		}
-		if($row[3]=="COMPLETECALLER" || $row[3]=="COMPLETEAGENT") {
- 			$answered++;
-			$ans_by_day["$partes_fecha[0]"]++;
-			$ans_by_hour["$partes_hora[0]"]++;
-			$ans_by_dw["$day_of_week"]++;
+		if($row[3]=="COMPLETECALLER" || $row[3]=="COMPLETEAGENT" || $row[3]=="BLINDTRANSFER" || $row[3]=="ATTENDEDTRANSFER" || $row[3]=="TRANSFER") {
 
-			$total_time_by_day["$partes_fecha[0]"]+=$row[5];
-			$total_hold_by_day["$partes_fecha[0]"]+=$row[4];
+			if($row[3]=="BLINDTRANSFER" || $row[3]=="ATTENDEDTRANSFER" || $row[3]=="TRANSFER"){
 
-			$total_time_by_dw["$day_of_week"]+=$row[5];
-			$total_hold_by_dw["$day_of_week"]+=$row[4];
-		
-			$total_time_by_hour["$partes_hora[0]"]+=$row[5];
-			$total_hold_by_hour["$partes_hora[0]"]+=$row[4];
+				$answered++;
+				$ans_by_day["$partes_fecha[0]"]++;
+				$ans_by_hour["$partes_hora[0]"]++;
+				$ans_by_dw["$day_of_week"]++;
+
+				$total_time_by_day["$partes_fecha[0]"]+=$row[7];
+				$total_hold_by_day["$partes_fecha[0]"]+=$row[6];
+
+				$total_time_by_dw["$day_of_week"]+=$row[7];
+				$total_hold_by_dw["$day_of_week"]+=$row[6];
+			
+				$total_time_by_hour["$partes_hora[0]"]+=$row[7];
+				$total_hold_by_hour["$partes_hora[0]"]+=$row[6];
+			
+			}else{
+				$answered++;
+				$ans_by_day["$partes_fecha[0]"]++;
+				$ans_by_hour["$partes_hora[0]"]++;
+				$ans_by_dw["$day_of_week"]++;
+
+				$total_time_by_day["$partes_fecha[0]"]+=$row[5];
+				$total_hold_by_day["$partes_fecha[0]"]+=$row[4];
+
+				$total_time_by_dw["$day_of_week"]+=$row[5];
+				$total_hold_by_dw["$day_of_week"]+=$row[4];
+			
+				$total_time_by_hour["$partes_hora[0]"]+=$row[5];
+				$total_hold_by_hour["$partes_hora[0]"]+=$row[4];
+			}
 		}
 		if($row[3]=="ADDMEMBER" || $row[3]=="AGENTCALLBACKLOGIN") {
  			$login++;
