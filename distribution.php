@@ -46,7 +46,7 @@ $graphcolorstack = "&bgcolor=0xF0ffff&bgcolorchart=0xdfedf3&fade1=ff6600&colorba
 
 $query = "SELECT time, queuename, agent, event, data1, data2, data3, data4, data5 FROM $DBTable ";
 $query.= "WHERE time >= '$start' AND time <= '$end' ";
-echo $query.= "AND queuename IN ($queue,'NONE') AND event IN ('TRANSFER','BLINDTRANSFER','ATTENDEDTRANSFER','ABANDON', 'EXITWITHTIMEOUT','COMPLETECALLER','COMPLETEAGENT','ADDMEMBER','REMOVEMEMBER','AGENTCALLBACKLOGIN','AGENTCALLBACKLOGOFF') ORDER BY time";
+$query.= "AND queuename IN ($queue,'NONE') AND event IN ('TRANSFER','BLINDTRANSFER','ATTENDEDTRANSFER','ABANDON', 'EXITWITHTIMEOUT','COMPLETECALLER','COMPLETEAGENT','ADDMEMBER','REMOVEMEMBER','AGENTCALLBACKLOGIN','AGENTCALLBACKLOGOFF') ORDER BY time";
 
 $query_comb     = "";
 $login          = 0;
