@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `queuelog` (
+CREATE TABLE IF NOT EXISTS `queue_log` (
 `id` INT NOT NULL AUTO_INCREMENT,
 `time` char(32) DEFAULT NULL,
 `callid` char(64) DEFAULT NULL,
